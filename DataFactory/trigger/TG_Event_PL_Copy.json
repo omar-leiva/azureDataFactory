@@ -1,0 +1,27 @@
+{
+	"name": "TG_Event_PL_Copy",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"pFileName": "@triggerBody().filename"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adftutorial/blobs/Input/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/835f8f6d-b8dc-44a4-b32a-fd0f43d3b506/resourceGroups/Azure_Intro/providers/Microsoft.Storage/storageAccounts/almacintro",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

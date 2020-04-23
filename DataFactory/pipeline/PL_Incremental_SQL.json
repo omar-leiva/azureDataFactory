@@ -1,0 +1,149 @@
+{
+	"name": "PL_Incremental_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "LKP_New_Watermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select max([insertdatetime]) newwatermarkvalue from [dbo].[orders_srce]",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Srce_Order",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "LKP_Act_Watermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select [watermarkvalue] oldwatermarkvalue from [dbo].[watermarktable] where [tablename] = 'orders'",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Dst_Watermark",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "CP_Incremental_SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LKP_New_Watermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "LKP_Act_Watermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * \nfrom [dbo].[orders_srce]\nwhere [insertdatetime] > '@{activity('LKP_Act_Watermark').output.firstRow.oldwatermarkvalue}'\nand [insertdatetime] <= '@{activity('LKP_New_Watermark').output.firstRow.newwatermarkvalue}'",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Srce_Order",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dst_Order",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "SP_Update_Watermarkvalue",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "CP_Incremental_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[spSetWatermark]",
+					"storedProcedureParameters": {
+						"NewTime": {
+							"value": {
+								"value": "@activity('LKP_New_Watermark').output.firstRow.newwatermarkvalue",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						},
+						"TableName": {
+							"value": "orders",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

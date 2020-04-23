@@ -1,0 +1,29 @@
+{
+	"name": "DS_FileTarget",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pFileName": {
+				"type": "string",
+				"defaultValue": "sales.txt"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().pFileName",
+					"type": "Expression"
+				},
+				"folderPath": "Output",
+				"container": "adftutorial"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
