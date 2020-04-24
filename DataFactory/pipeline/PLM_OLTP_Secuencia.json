@@ -1,0 +1,44 @@
+{
+	"name": "PLM_OLTP_Secuencia",
+	"properties": {
+		"activities": [
+			{
+				"name": "Carga a Staging",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_OLTP_Srce_to_Stg",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Carga a Destino",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Carga a Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_OLTP_Load_Masters",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": []
+	}
+}

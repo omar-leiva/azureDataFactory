@@ -1,0 +1,41 @@
+{
+	"name": "dst_Employee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "employeekey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "employeecode",
+				"type": "varchar"
+			},
+			{
+				"name": "employeename",
+				"type": "varchar"
+			},
+			{
+				"name": "address",
+				"type": "varchar"
+			},
+			{
+				"name": "phonenumber",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employee"
+		}
+	}
+}

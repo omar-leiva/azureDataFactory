@@ -1,0 +1,54 @@
+{
+	"name": "stg_PurchaseOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "purchaseorderid",
+				"type": "varchar"
+			},
+			{
+				"name": "customercode",
+				"type": "varchar"
+			},
+			{
+				"name": "productcode",
+				"type": "varchar"
+			},
+			{
+				"name": "employeecode",
+				"type": "varchar"
+			},
+			{
+				"name": "purchaseorderdate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "quantity",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "unitprice",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_purchaseorder"
+		}
+	}
+}

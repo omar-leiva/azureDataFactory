@@ -1,0 +1,32 @@
+{
+	"name": "stg_Product",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "productcode",
+				"type": "varchar"
+			},
+			{
+				"name": "productname",
+				"type": "varchar"
+			},
+			{
+				"name": "productgroup",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_product"
+		}
+	}
+}

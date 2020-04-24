@@ -1,0 +1,182 @@
+{
+	"name": "PL_OLTP_Load_Masters",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Customer",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"sqlWriterStoredProcedureName": "[dbo].[sp_loadcustomer]",
+						"sqlWriterTableType": "type_stg_customer",
+						"storedProcedureTableTypeParameterName": "source"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "stg_Customer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dst_Customer",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Employee",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"sqlWriterStoredProcedureName": "[dbo].[sp_loademployee]",
+						"sqlWriterTableType": "type_stg_employee",
+						"storedProcedureTableTypeParameterName": "source"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "stg_Employee",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dst_Employee",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Product",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"sqlWriterStoredProcedureName": "[dbo].[sp_loadproduct]",
+						"sqlWriterTableType": "type_stg_product",
+						"storedProcedureTableTypeParameterName": "source"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "stg_Product",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dst_Product",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Purchase Order",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy Employee",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy Product",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"sqlWriterStoredProcedureName": "[dbo].[sp_loadpurchaseorder]",
+						"sqlWriterTableType": "type_stg_purchaseorder",
+						"storedProcedureTableTypeParameterName": "source"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "stg_PurchaseOrder",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dst_PurchaseOrder",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": []
+	}
+}

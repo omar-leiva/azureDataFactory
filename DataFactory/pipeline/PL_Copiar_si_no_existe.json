@@ -109,6 +109,9 @@
 				"defaultValue": "sales.txt"
 			}
 		},
+		"folder": {
+			"name": "Copia_Blob"
+		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"

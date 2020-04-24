@@ -1,0 +1,44 @@
+{
+	"name": "srce_Customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Customer.txt",
+				"folderPath": "Input/Sales",
+				"container": "adftutorial"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CustomerCode",
+				"type": "String"
+			},
+			{
+				"name": "CustomerName",
+				"type": "String"
+			},
+			{
+				"name": "Address",
+				"type": "String"
+			},
+			{
+				"name": "PhoneNumber",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -143,6 +143,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Incremental_SQL"
+		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
