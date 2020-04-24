@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADFDataFactoryOL"
+		},
+		"AzureBlobStorageLinkedService_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLinkedService'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"LS_KeyVaultOL_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keyvaultOL.vault.azure.net/"
+		},
+		"TG_Event_PL_Copy_properties_CopyPipeline_parameters_pFileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().filename"
+		},
+		"TG_Event_PL_Copy_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/835f8f6d-b8dc-44a4-b32a-fd0f43d3b506/resourceGroups/Azure_Intro/providers/Microsoft.Storage/storageAccounts/almacintro"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorageLinkedService_connectionString": {
+						"value": "[parameters('AzureBlobStorageLinkedService_connectionString')]"
+					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"LS_KeyVaultOL_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_KeyVaultOL_properties_typeProperties_baseUrl')]"
+					},
+					"TG_Event_PL_Copy_properties_CopyPipeline_parameters_pFileName": {
+						"value": "[parameters('TG_Event_PL_Copy_properties_CopyPipeline_parameters_pFileName')]"
+					},
+					"TG_Event_PL_Copy_properties_typeProperties_scope": {
+						"value": "[parameters('TG_Event_PL_Copy_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

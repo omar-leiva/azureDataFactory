@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFDataFactoryOL"
+		},
+		"AzureBlobStorageLinkedService_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"LS_KeyVaultOL_properties_typeProperties_baseUrl": {
+			"value": "https://keyvaultOL.vault.azure.net/"
+		},
+		"TG_Event_PL_Copy_properties_CopyPipeline_parameters_pFileName": {
+			"value": "@triggerBody().filename"
+		},
+		"TG_Event_PL_Copy_properties_typeProperties_scope": {
+			"value": "/subscriptions/835f8f6d-b8dc-44a4-b32a-fd0f43d3b506/resourceGroups/Azure_Intro/providers/Microsoft.Storage/storageAccounts/almacintro"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
