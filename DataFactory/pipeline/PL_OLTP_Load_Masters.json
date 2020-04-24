@@ -1,5 +1,5 @@
 {
-	"name": "PL_Load_Masters",
+	"name": "PL_OLTP_Load_Masters",
 	"properties": {
 		"activities": [
 			{
