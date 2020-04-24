@@ -1,5 +1,5 @@
 {
-	"name": "dst_Customer",
+	"name": "dst_Employee",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -12,16 +12,16 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "customerkey",
+				"name": "employeekey",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "customercode",
+				"name": "employeecode",
 				"type": "varchar"
 			},
 			{
-				"name": "customername",
+				"name": "employeename",
 				"type": "varchar"
 			},
 			{
@@ -35,7 +35,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "customer"
+			"table": "employee"
 		}
 	}
 }
