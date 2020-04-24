@@ -11,6 +11,9 @@
 				"defaultValue": "sales.txt"
 			}
 		},
+		"folder": {
+			"name": "Copia_Blob"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
