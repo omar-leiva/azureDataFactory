@@ -1,0 +1,37 @@
+{
+	"name": "dst_Product",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "productkey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productcode",
+				"type": "varchar"
+			},
+			{
+				"name": "productname",
+				"type": "varchar"
+			},
+			{
+				"name": "productgroup",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "product"
+		}
+	}
+}
