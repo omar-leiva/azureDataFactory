@@ -1,0 +1,56 @@
+{
+	"name": "dst_PurchaseOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OLTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "purchaseorderid",
+				"type": "varchar"
+			},
+			{
+				"name": "customerkey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productkey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "employeekey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "purchaseorderdatekey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "quantity",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "unitprice",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "purchaseorder"
+		}
+	}
+}
