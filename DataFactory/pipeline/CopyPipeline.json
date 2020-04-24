@@ -5,14 +5,7 @@
 			{
 				"name": "CopyFromBlobToBlob",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Wait1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -55,15 +48,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 5
-				}
 			}
 		],
 		"parameters": {
